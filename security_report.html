@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { font-family: Arial; background: #f4f6f9; margin: 20px; }
+        h1, h2 { text-align: center; color: #2c3e50; }
+        .chart-container { width: 80%; margin: 20px auto; }
+        .box {
+            width: 90%; margin: 20px auto;
+            background: white; padding: 15px;
+            border-left: 6px solid #2980b9;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 95%; margin: 20px auto; border-collapse: collapse;
+            background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td { padding: 12px; border: 1px solid #ddd; }
+        th { background: #2C86D4; color: white; }
+        tr:nth-child(even) { background: #f8f8f8; }
+    </style>
+</head>
+
+<body>
+
+<h1>Web Application Security Report</h1>
+
+<!-- Bar Chart -->
+<div class="chart-container">
+    <canvas id="severityChart"></canvas>
+</div>
+
+<script>
+    const ctx = document.getElementById('severityChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['High', 'Medium', 'Low', 'Unclassified'],
+            datasets: [{
+                label: 'Vulnerabilities by Severity',
+                data: [2, 1, 1, 1],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
+<h2>Findings Summary</h2>
+<div class="box">
+    2 high-severity vulnerabilities detected. These pose critical risks and require immediate attention. 1 medium-severity issues found. These can impact security if combined with other weaknesses. 1 low-severity issues found. These are minor but should be fixed for better security hygiene. 1 findings could not be classified. These require manual inspection.
+</div>
+
+<h2>Detailed Vulnerability List</h2>
+<table>
+    <tr>
+        <th>Type</th>
+        <th>Affected File</th>
+        <th>Severity</th>
+        <th>Evidence</th>
+        <th>Mitigation</th>
+    </tr>
+
+    
+    <tr>
+        <td>SQL Injection</td>
+        <td>login.php</td>
+        <td>High</td>
+        <td>Input vulnerable to SQL payload ' OR '1'='1</td>
+        <td>Use prepared statements and strict input validation.</td>
+    </tr>
+    
+    <tr>
+        <td>Broken Authentication</td>
+        <td>admin.php</td>
+        <td>High</td>
+        <td>Weak login protection allows brute-force attacks</td>
+        <td>Enable rate limiting & secure password policy.</td>
+    </tr>
+    
+    <tr>
+        <td>Reflected XSS</td>
+        <td>profile.php</td>
+        <td>Medium</td>
+        <td><script>alert(1)</script> reflection detected</td>
+        <td>Sanitize user input & use CSP.</td>
+    </tr>
+    
+    <tr>
+        <td>Directory Listing Enabled</td>
+        <td>/uploads/</td>
+        <td>Low</td>
+        <td>Directory contents visible</td>
+        <td>Disable directory listing in server config.</td>
+    </tr>
+    
+    <tr>
+        <td>Unidentified Pattern</td>
+        <td>unknown</td>
+        <td>Unclassified</td>
+        <td>Scanner unable to determine severity</td>
+        <td>Manual review required.</td>
+    </tr>
+    
+</table>
+
+</body>
+</html>

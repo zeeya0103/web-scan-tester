@@ -1,0 +1,18 @@
+services:
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: dvwa
+    ports:
+      - "80:80"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dvwa
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: dvwa
+
+  webscanpro:
+    build: .
+    container_name: webscanpro
+    depends_on:
+      - dvwa
+    command: ["python", "wait_and_run.py"]  # <- list format works best
